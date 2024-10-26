@@ -1,0 +1,59 @@
+/* src/components/Navbar.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #282c34; /* Adjust as needed */
+  }
+  
+  .navbar-title {
+    color: #fff;
+    font-size: 24px;
+  }
+  
+  .navbar-menu {
+    position: relative;
+  }
+  
+  .profile-menu {
+    cursor: pointer;
+  }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .sliding-menu {
+    position: absolute;
+    top: 50px; /* Adjust based on your navbar height */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%); /* Start off-screen */
+    transition: transform 0.3s ease; /* Smooth transition */
+    opacity: 0; /* Start hidden */
+    visibility: hidden; /* Prevent clicks when hidden */
+  }
+  
+  .sliding-menu.open {
+    transform: translateX(0); /* Slide in */
+    opacity: 1; /* Show */
+    visibility: visible; /* Allow clicks */
+  }
+  
+  .menu-item {
+    padding: 10px 15px;
+    color: black; /* Adjust text color */
+  }
+  
+  .logout-btn {
+    color: red; /* Make logout button red */
+    cursor: pointer;
+  }
+  
