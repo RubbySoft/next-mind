@@ -1,29 +1,18 @@
-import { auth } from '../firebaseConfig'; // Adjust the import as per your project structure
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+// src/services/authService.js
+import { auth, provider } from './firebase';
+import { signInWithPopup } from 'firebase/auth';
 
-const provider = new GoogleAuthProvider();
-
+// Login with Google
 export const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    // You can add additional logic here, like saving user data in your database
+    // Return user information or do further processing
     return user;
   } catch (error) {
-    console.error("Google Sign-In Error", error);
-    throw error; // Re-throw the error for handling in the component
+    console.error("Error logging in with Google: ", error);
+    throw error;
   }
 };
 
-// Other existing exports...
-export const loginWithEmail = async (email, password) => {
-  // Your email login logic
-};
-
-export const signUpWithEmail = async (email, password) => {
-  // Your signup logic
-};
-
-export const logOut = async () => {
-  // Your logout logic
-};
+// Other authentication methods (if any)

@@ -1,56 +1,31 @@
-import React, { useState } from 'react';
+// src/components/Login.js
+import React from 'react';
+import { useAuth } from '../context/AuthContext';
+import { loginWithGoogle } from '../services/authService'; // Adjust the path as needed
 import { useNavigate } from 'react-router-dom';
-import { loginWithEmail, loginWithGoogle } from '../services/authService'; // Correctly import loginWithGoogle
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
-      await loginWithEmail(email, password);
-      setEmail('');
-      setPassword('');
-      navigate('/'); // Redirect to home after successful login
-    } catch (err) {
-      setError('Login failed. Please try again.'); // Handle errors
+      await loginWithGoogle();
+      navigate('/home'); // Redirect to Home after successful login
+    } catch (error) {
+      console.error("Error during login: ", error);
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle(); // Call the corrected Google sign-in method
-      navigate('/'); // Redirect to home after successful Google login
-    } catch (error) {
-      setError('Google Sign-In failed. Please try again.'); // Handle errors
-    }
-  };
+  // Redirect to home if user is already logged in
+  if (user) {
+    navigate('/home');
+  }
 
   return (
     <div>
-      <h2>Login</h2>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      <button onClick={handleGoogleLogin}>Sign in with Google</button> {/* Button for Google Sign-In */}
+      <h1>Login</h1>
+      <button onClick={handleLogin}>Sign in with Google</button>
     </div>
   );
 };
